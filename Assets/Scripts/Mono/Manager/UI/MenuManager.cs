@@ -6,7 +6,6 @@ public class MenuManager : MonoBehaviour
     public SlotPrefabManager slotPrefab;
     public NeedDatas needDatas;
 
-    
     void Start()
     {
         menuPanel = transform.Find("MenuPanel");
@@ -17,6 +16,7 @@ public class MenuManager : MonoBehaviour
     {
         foreach (var needData in needDatas.needDatas)
         {
+            if (needData.needType == NeedType.None) continue;
             SlotPrefabManager newSlot = Instantiate(slotPrefab, menuPanel);
             if (newSlot == null)
             {
@@ -26,11 +26,8 @@ public class MenuManager : MonoBehaviour
 
             newSlot.Initialize(needData);
 
-            RectTransform slotRectTransform = newSlot.GetComponent<RectTransform>();
-            if (slotRectTransform != null)
-            {
-                slotRectTransform.anchoredPosition = new Vector2(100, -150 * needDatas.needDatas.IndexOf(needData) - 50);
-            }
+            if (!newSlot.TryGetComponent<RectTransform>(out RectTransform slotRectTransform)) return;
+            slotRectTransform.anchoredPosition = new Vector2(100, -150 * (needDatas.needDatas.IndexOf(needData) - 1 ) - 50);   
         }
     }
 }

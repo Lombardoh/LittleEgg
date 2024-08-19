@@ -8,4 +8,13 @@ public class ResourceManagerBase : MonoBehaviour
     {
         resource = new(needType, resourceValue );
     }
+
+    public float GetResouceValue()
+    {
+        return resource.ResourceValue;
+    }    
+    public NeedType GetNeedType()
+    {
+        return resource.needType;
+    }
 }

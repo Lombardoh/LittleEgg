@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: NeedDatas
   m_EditorClassIdentifier: 
   needDatas:
+  - sprite: {fileID: 21300000, guid: 9f479b791ce5dd54ebe5209c81878fe5, type: 3}
+    needType: 0
   - sprite: {fileID: 21300000, guid: 064ad6015d05d3245948ab42df33852b, type: 3}
-    need: 0
+    needType: 1
   - sprite: {fileID: 21300000, guid: 035a23b3e067db349a3f32cdba7f3687, type: 3}
-    need: 1
+    needType: 2
   - sprite: {fileID: 21300000, guid: 68bc525c53242b340918bf0aa2bc02ec, type: 3}
-    need: 2
+    needType: 3
   - sprite: {fileID: 21300000, guid: e4a895405c6a34848a5a35c9462b9530, type: 3}
-    need: 3
+    needType: 4

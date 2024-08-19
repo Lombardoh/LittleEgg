@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using UnityEngine;
+using System.Linq;
 
 public class NeedsBase
 {
@@ -17,16 +19,19 @@ public class NeedsBase
 
     public float GetNeed(NeedType needType)
     {
+        if(needType == NeedType.None) { return 0; }
         return Needs[needType];
     }
 
     public void SetNeed(NeedType needType, float value)
     {
-        Needs[needType] = value;
+        float clampedValue = Mathf.Clamp(value, 0, 100);
+        Needs[needType] = clampedValue;
     }
+
 
     public List<KeyValuePair<NeedType, float>> GetAllNeeds()
     {
-        return new List<KeyValuePair<NeedType, float>>(Needs);
+        return Needs.Where(need => need.Key != NeedType.None).ToList();
     }
 }
