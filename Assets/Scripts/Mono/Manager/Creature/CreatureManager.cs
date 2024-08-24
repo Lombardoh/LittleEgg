@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using static TreeEditor.TreeEditorHelper;
 
 public class CreatureManagerBase : MonoBehaviour, ITickListener
 {
@@ -15,9 +16,7 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
     public Transform target;
     private readonly float speed = 5f;
     public float interactDistance = 3;
-    public List<NeedData> unFullfiledNeeds;
-    private int currentNeedPanelSpriteIndex = 0;
-
+    public List<NeedType> UnfullfiledNeedsTypes;
 
     private void OnEnable()
     {
@@ -34,7 +33,7 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
         characterController = GetComponent<CharacterController>();
         creatureUIManager = GetComponentInChildren<CreatureUIManager>();
         creature = new ();
-        unFullfiledNeeds = new();
+        UnfullfiledNeedsTypes = new();
     }
 
     private void Start()
@@ -89,7 +88,19 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
     {
         foreach (var need in creature.GetAllNeeds())
         {
-            creature.Needs.SetNeed(need.Key, need.Value + 1);
+            creature.Needs.SetNeed(need.Key, Mathf.Min(100, need.Value + 1));
+
+            bool isNeedInUnfulfilledNeeds = UnfullfiledNeedsTypes.Any(n => n == need.Key);
+
+            if (need.Value > warningThreshold && !isNeedInUnfulfilledNeeds) { 
+                creatureUIManager.UpdateNeedPanel(need.Key);
+                UnfullfiledNeedsTypes.Add(need.Key);
+            }
+            if (need.Value < warningThreshold && isNeedInUnfulfilledNeeds) {
+                Debug.Log("here");
+                creatureUIManager.UpdateNeedPanel(need.Key);
+                UnfullfiledNeedsTypes.Remove(need.Key);
+            }
         }
         UIEvens.OnUpdateStatusUI?.Invoke(creature.GetAllNeeds());
     }

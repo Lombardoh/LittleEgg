@@ -393,8 +393,9 @@ GameObject:
   - component: {fileID: 243736719}
   - component: {fileID: 243736718}
   - component: {fileID: 243736717}
+  - component: {fileID: 243736720}
   m_Layer: 5
-  m_Name: NeedCanvas
+  m_Name: CreatureUIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -483,6 +484,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &243736720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243736715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d553fe1e04fc0042bbddc7e6ca19834, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  needPanel: {fileID: 158088453}
+  UnfullfiledNeeds: []
 --- !u!1 &325606522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,38 +1016,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893410489}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &938263446
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 938263447}
-  m_Layer: 0
-  m_Name: PlayerUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &938263447
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 938263446}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0601792, y: 1.2592058, z: 9.287048}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1681748713}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1181,13 +1164,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c8c830524319414890e74bead958fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  needRow: {fileID: 1538948270835189739, guid: 7347808f04cbd6a43b739f2092fd4f66, type: 3}
   statusPanel: {fileID: 325606523}
-  needPanel: {fileID: 158088453}
   needDatas: {fileID: 11400000, guid: da1815fd4b5103e42884c3f2c2edf75a, type: 2}
   target: {fileID: 0}
   interactDistance: 2
-  unFullfiledNeeds: []
+  UnfullfiledNeedsTypes: 
 --- !u!4 &1077397487
 Transform:
   m_ObjectHideFlags: 0
@@ -1216,6 +1197,7 @@ GameObject:
   - component: {fileID: 1288491629}
   - component: {fileID: 1288491628}
   - component: {fileID: 1288491627}
+  - component: {fileID: 1288491630}
   m_Layer: 0
   m_Name: GlobalManager
   m_TagString: Untagged
@@ -1262,6 +1244,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1288491630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288491626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4be17fa074d20942bed312f9afefb9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notFoundSprite: {fileID: 0}
+  needDatas: {fileID: 11400000, guid: da1815fd4b5103e42884c3f2c2edf75a, type: 2}
 --- !u!1 &1330064931
 GameObject:
   m_ObjectHideFlags: 0
@@ -1524,7 +1520,7 @@ GameObject:
   - component: {fileID: 1681748714}
   - component: {fileID: 1681748717}
   m_Layer: 5
-  m_Name: SideMenu
+  m_Name: MenuManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1544,7 +1540,7 @@ RectTransform:
   m_Children:
   - {fileID: 325606523}
   - {fileID: 1330064932}
-  m_Father: {fileID: 938263447}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1626,9 +1622,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37f7073349818e14cbbb87f6401dc079, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuPanel: {fileID: 0}
+  menuPanel: {fileID: 1330064932}
+  statusPanel: {fileID: 325606523}
   slotPrefab: {fileID: 8844504123579657475, guid: 0a3c144d352d09a4392a432fd9f6a519, type: 3}
   needDatas: {fileID: 11400000, guid: da1815fd4b5103e42884c3f2c2edf75a, type: 2}
+  needRow: {fileID: 1538948270835189739, guid: 7347808f04cbd6a43b739f2092fd4f66, type: 3}
 --- !u!1 &1704369787
 GameObject:
   m_ObjectHideFlags: 0
@@ -1746,5 +1744,5 @@ SceneRoots:
   - {fileID: 2929488}
   - {fileID: 1288491629}
   - {fileID: 1642099126}
-  - {fileID: 938263447}
   - {fileID: 237634319}
+  - {fileID: 1681748713}
