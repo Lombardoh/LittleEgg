@@ -27,6 +27,7 @@ public class NeedsBase
     {
         float clampedValue = Mathf.Clamp(value, 0, 100);
         Needs[needType] = clampedValue;
+        Debug.Log(clampedValue);
     }
 
 
