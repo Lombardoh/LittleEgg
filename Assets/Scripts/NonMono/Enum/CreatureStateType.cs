@@ -1,8 +1,9 @@
 public enum CreatureStateType
 {
-    Idle,
+    Idling,
     Eating,
     Drinking,
     Sleeping,
-    Playing
+    Playing,
+    Walking
 }

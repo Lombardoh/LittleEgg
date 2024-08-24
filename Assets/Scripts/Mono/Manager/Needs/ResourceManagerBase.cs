@@ -4,7 +4,7 @@ public class ResourceManagerBase : MonoBehaviour
 {
     private Resource resource;
 
-    public void initialize(NeedType needType, float resourceValue)
+    public void Initialize(NeedType needType, float resourceValue)
     {
         resource = new(needType, resourceValue );
     }
@@ -12,6 +12,10 @@ public class ResourceManagerBase : MonoBehaviour
     public float GetResouceValue()
     {
         return resource.ResourceValue;
+    }        
+    public void SetResouceValue(float newValue)
+    {
+        resource.ResourceValue = newValue;
     }    
     public NeedType GetNeedType()
     {

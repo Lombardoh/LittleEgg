@@ -1,22 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using static TreeEditor.TreeEditorHelper;
 
 public class CreatureManagerBase : MonoBehaviour, ITickListener
 {
+    private readonly float warningThreshold = 70;
+    private readonly float speed = 5f;
+    public float interactDistance = 3;
+
     private Creature creature;
     private CharacterController characterController;
     private CreatureUIManager creatureUIManager;
-    public Transform statusPanel;
-
-    public NeedDatas needDatas;
-
-    private readonly float warningThreshold = 70;
-    public Transform target;
-    private readonly float speed = 5f;
-    public float interactDistance = 3;
+    private CreatureStateManager creatureStateManager;
     public List<NeedType> UnfullfiledNeedsTypes;
+    public CreatureAnimatorManager animatorManager;
+
+    public Transform target;
 
     private void OnEnable()
     {
@@ -32,6 +31,8 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
     {
         characterController = GetComponent<CharacterController>();
         creatureUIManager = GetComponentInChildren<CreatureUIManager>();
+        creatureStateManager = GetComponent<CreatureStateManager>();
+        animatorManager = GetComponent<CreatureAnimatorManager>();
         creature = new ();
         UnfullfiledNeedsTypes = new();
     }
@@ -45,14 +46,15 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
     {
         MoveTowardsTarget();
         if (!TargetReached()) return;
-        ConsumeResource();
     }
 
     private void ConsumeResource()
     {
-        var (resourceAmount, needType) = StationEvents.OnResourceConsumed?.Invoke() ?? (0f, NeedType.None);
+        var (resourceAmount, needType) = StationEvents.OnResourceConsumed?.Invoke(creature.recoveryRate) ?? (0f, NeedType.None);
         creature.Needs.SetNeed(needType, -resourceAmount);
+        if (resourceAmount > 0) { return; }
         target = null;
+        creatureStateManager.OnStateChangeRequested(CreatureStateType.Idling);
     }
 
     private void MoveTowardsTarget()
@@ -69,7 +71,7 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
     {
         if (target == null) return false;
         if (Vector3.Distance(target.position, this.transform.position) > interactDistance) return false;
-
+        ConsumeResource();
         return true;
     }
 
@@ -77,6 +79,7 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
     {
         if (creature.NeedFullfilled(needType)) return;
         this.target = target;
+        creatureStateManager.OnStateChangeRequested(CreatureStateType.Walking);
     }
 
     public void OnTicked()
@@ -97,7 +100,6 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
                 UnfullfiledNeedsTypes.Add(need.Key);
             }
             if (need.Value < warningThreshold && isNeedInUnfulfilledNeeds) {
-                Debug.Log("here");
                 creatureUIManager.UpdateNeedPanel(need.Key);
                 UnfullfiledNeedsTypes.Remove(need.Key);
             }

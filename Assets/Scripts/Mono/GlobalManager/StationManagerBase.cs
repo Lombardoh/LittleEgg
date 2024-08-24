@@ -17,14 +17,19 @@ public class StationManagerBase : MonoBehaviour
         StationEvents.OnResourceConsumed -= ResourceConsumed;
     }
 
-    private (float resourceAmount, NeedType needType) ResourceConsumed()
+    private (float resourceAmount, NeedType needType) ResourceConsumed(float consumedAmount)
     {
         if (currentResource == null) return (0f, NeedType.None);
 
-        float resourceValue = currentResource.GetResouceValue();
+        float newValue = Mathf.Max(0, currentResource.GetResouceValue() - consumedAmount);
+
+        currentResource.SetResouceValue(newValue);
+
+        float resourceLeft = Mathf.Max(currentResource.GetResouceValue(), consumedAmount);
         NeedType needType = currentResource.GetNeedType();
-        Destroy(currentResource.gameObject);
-        return (resourceValue, needType);
+        if(resourceLeft < 1) { Destroy(currentResource.gameObject); }
+        
+        return (resourceLeft, needType);
     }
 
     private void ResourceRequested(NeedType needType)
@@ -34,7 +39,7 @@ public class StationManagerBase : MonoBehaviour
             Destroy(currentResource.gameObject);
         }
         ResourceManagerBase newResource = Instantiate(resourcePrefab, resourceSpawn);
-        newResource.initialize(needType, 100);
+        newResource.Initialize(needType, 100);
         currentResource = newResource;
         StationEvents.OnResourceCreated?.Invoke(needType, currentResource.transform);
     }
