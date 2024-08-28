@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class StationManagerBase : MonoBehaviour
+public class StationManagerBase : MonoBehaviour, IInteractable
 {
     public Transform resourceSpawn;
     public ResourceManagerBase resourcePrefab;
@@ -42,5 +42,10 @@ public class StationManagerBase : MonoBehaviour
         newResource.Initialize(needType, 100);
         currentResource = newResource;
         StationEvents.OnResourceCreated?.Invoke(needType, currentResource.transform);
+    }
+
+    public void Interact()
+    {
+        throw new System.NotImplementedException();
     }
 }

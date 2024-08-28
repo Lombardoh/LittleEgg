@@ -5,15 +5,14 @@ using System.Linq;
 public class CreatureManagerBase : MonoBehaviour, ITickListener
 {
     private readonly float warningThreshold = 70;
-    private readonly float speed = 5f;
     public float interactDistance = 3;
 
     private Creature creature;
-    private CharacterController characterController;
     private CreatureUIManager creatureUIManager;
     private CreatureStateManager creatureStateManager;
     public List<NeedType> UnfullfiledNeedsTypes;
     public CreatureAnimatorManager animatorManager;
+    public CreatureLocomotionManager locomotionManager;
 
     public Transform target;
 
@@ -29,10 +28,10 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
         creatureUIManager = GetComponentInChildren<CreatureUIManager>();
         creatureStateManager = GetComponent<CreatureStateManager>();
         animatorManager = GetComponent<CreatureAnimatorManager>();
+        locomotionManager = GetComponent<CreatureLocomotionManager>();
         creature = new ();
         UnfullfiledNeedsTypes = new();
     }
@@ -45,34 +44,18 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
     private void Update()
     {
         MoveTowardsTarget();
-        if (!TargetReached()) return;
     }
 
-    private void ConsumeResource()
+    public List<KeyValuePair<NeedType, float>> GetAllNeeds()
     {
-        var (resourceAmount, needType) = StationEvents.OnResourceConsumed?.Invoke(creature.recoveryRate) ?? (0f, NeedType.None);
-        creature.Needs.SetNeed(needType, -resourceAmount);
-        if (resourceAmount > 0) { return; }
-        target = null;
-        creatureStateManager.OnStateChangeRequested(CreatureStateType.Idling);
+        return creature.GetNeeds().GetAllNeeds();
     }
 
     private void MoveTowardsTarget()
     {
         if (target == null) return;
 
-        Vector3 currentPosition = transform.position;
-        Vector3 targetPosition = target.position;
-        Vector3 nextPosition = Vector3.MoveTowards(currentPosition, targetPosition, speed * Time.deltaTime);
-        characterController.Move(nextPosition - currentPosition);
-    }
-
-    private bool TargetReached()
-    {
-        if (target == null) return false;
-        if (Vector3.Distance(target.position, this.transform.position) > interactDistance) return false;
-        ConsumeResource();
-        return true;
+        locomotionManager.MoveToDestination(target.position);
     }
 
     private void ResourceCreated(NeedType needType, Transform target)
@@ -89,7 +72,9 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
 
     private void UpdateCreatureNeeds()
     {
-        foreach (var need in creature.GetAllNeeds())
+        List<KeyValuePair<NeedType, float>> _needs = creature.GetNeeds().GetAllNeeds();
+
+        foreach (var need in _needs)
         {
             creature.Needs.SetNeed(need.Key, Mathf.Min(100, need.Value + 1));
 
@@ -104,6 +89,8 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
                 UnfullfiledNeedsTypes.Remove(need.Key);
             }
         }
-        UIEvens.OnUpdateStatusUI?.Invoke(creature.GetAllNeeds());
+        UIEvens.OnUpdateStatusUI?.Invoke(_needs);
     }
+
+
 }

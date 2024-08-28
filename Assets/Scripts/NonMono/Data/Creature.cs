@@ -11,9 +11,9 @@ public class Creature
         Needs = new(70, 60, 50, 40); 
     }
 
-    public List<KeyValuePair<NeedType, float>> GetAllNeeds()
+    public NeedsBase GetNeeds()
     {
-        return Needs.GetAllNeeds();
+        return Needs;
     }
 
     public bool NeedFullfilled(NeedType needType)
