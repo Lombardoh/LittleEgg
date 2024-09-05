@@ -33,7 +33,7 @@ public class SlotPrefabManager : MonoBehaviour
 
     private void OnImageClick()
     {
-        StationEvents.OnResourceRequested?.Invoke(this.needData.needType);
+        StationEvents.OnCreateStationRequested?.Invoke(this.needData.needType);
     }
 
 }

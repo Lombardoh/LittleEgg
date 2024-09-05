@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4e69f2dbc514e94f8ce1c5da3c37e1f, type: 3}
+  m_Name: StationDatas
+  m_EditorClassIdentifier: 
+  stationData:
+  - needType: 0
+    stationPrefab: {fileID: 0}
+    maxAmount: 0
+    currentAmount: 0
+    refillRate: 0
+  - needType: 1
+    stationPrefab: {fileID: 7525541074254221192, guid: 688b41c129320c74abd99938495856c2, type: 3}
+    maxAmount: 100
+    currentAmount: 100
+    refillRate: 1
+  - needType: 2
+    stationPrefab: {fileID: 4787028365746890501, guid: 919014d45d3b3964dbb0745f03b5e127, type: 3}
+    maxAmount: 0
+    currentAmount: 0
+    refillRate: 0
+  - needType: 3
+    stationPrefab: {fileID: 3983281468284894195, guid: c471c71ef955cd3409d8a7a7530585cf, type: 3}
+    maxAmount: 0
+    currentAmount: 0
+    refillRate: 0
+  - needType: 4
+    stationPrefab: {fileID: 5134895666646796144, guid: bf917385d2e8a344da9300162713d181, type: 3}
+    maxAmount: 0
+    currentAmount: 0
+    refillRate: 0

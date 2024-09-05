@@ -1,22 +1,20 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ScriptableManager : Singleton<ScriptableManager>
 {
+    [EnumNamedArray(typeof(ScriptableType))]
+    public List<ScriptableObject> scritableList;
     public Sprite notFoundSprite;
-    public NeedDatas needDatas;
 
-    public ScriptableObject RequestData(EnumType enumType)
+    public ScriptableObject RequestData(ScriptableType scriptableType)
     {
-        switch (enumType) 
-        {
-            case EnumType.Need:
-                return needDatas;
-            default: return null;
-        }
+        return scritableList[(int)scriptableType];
     }
 
     public Sprite GetNeedSprite(NeedType needType) 
     {
+        NeedDatas needDatas = (NeedDatas)scritableList[0];
         return needDatas.needDatas[(int)needType].sprite ?? notFoundSprite;
     }
 }

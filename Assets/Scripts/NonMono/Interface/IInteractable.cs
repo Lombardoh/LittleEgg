@@ -1,4 +1,6 @@
+using System.Collections.Generic;
+
 public interface IInteractable 
 {
-    public void Interact();
+    public KeyValuePair<NeedType, float> Interact();
 }

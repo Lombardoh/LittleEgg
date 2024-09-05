@@ -4,15 +4,37 @@ using UnityEngine;
 
 public class CreatureInteractionManager : InteractionManagerBase
 {
-    // Start is called before the first frame update
-    void Start()
+    CreatureManagerBase creature;
+
+    protected override void Awake()
     {
-        
+        base.Awake();
+        creature = GetComponent<CreatureManagerBase>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void InteractWithStation()
     {
-        
+        if (creature.targetStations.Count < 1) return;
+
+        NeedType stationType = creature.targetStations[0].GetNeedType();
+
+
+        switch (stationType)
+        {
+            case NeedType.Hunger:
+                creature.creatureStateManager.OnStateChangeRequested(CreatureStateType.Eating);
+                break;
+            case NeedType.Thirst:
+                creature.creatureStateManager.OnStateChangeRequested(CreatureStateType.Drinking);
+                break;
+            case NeedType.Boredom:
+                creature.creatureStateManager.OnStateChangeRequested(CreatureStateType.Playing);
+                break;
+            case NeedType.Sleep:
+                creature.creatureStateManager.OnStateChangeRequested(CreatureStateType.Sleeping);
+                break;
+            default:
+                return;
+        }
     }
 }

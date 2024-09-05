@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    public Transform menuPanel;
+    public Transform stationPanel;
     public Transform statusPanel;
     private Dictionary<string, NeedRowManager> statusPanelText = new();
     public SlotPrefabManager slotPrefab;
@@ -25,12 +23,11 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
-        menuPanel = transform.Find("MenuPanel");
-        needDatas = (NeedDatas)ScriptableManager.Instance.RequestData(EnumType.Need);
-        FillUIMenues();
+        needDatas = (NeedDatas)ScriptableManager.Instance.RequestData(ScriptableType.Need);
+        FillStationMenu();
     }
 
-    private void FillUIMenues()
+    private void FillStationMenu()
     {
         if (!statusPanel.TryGetComponent<RectTransform>(out RectTransform panelRectTransform)) return;
         float yOffset = panelRectTransform.rect.height / 2 - verticalSpacing;
@@ -38,7 +35,7 @@ public class MenuManager : MonoBehaviour
         foreach (NeedData needData in needDatas.needDatas)
         {
             if (needData.needType == NeedType.None) continue;
-            SlotPrefabManager newSlot = Instantiate(slotPrefab, menuPanel);
+            SlotPrefabManager newSlot = Instantiate(slotPrefab, stationPanel);
             if (newSlot == null)
             {
                 Debug.LogError("Failed to instantiate SlotPrefabManager.");

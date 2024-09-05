@@ -9,22 +9,14 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
 
     private Creature creature;
     private CreatureUIManager creatureUIManager;
-    private CreatureStateManager creatureStateManager;
-    public List<NeedType> UnfullfiledNeedsTypes;
+    public CreatureStateManager creatureStateManager;
+    public List<NeedType> unfullfiledNeedsTypes;
     public CreatureAnimatorManager animatorManager;
     public CreatureLocomotionManager locomotionManager;
+    public CreatureInteractionManager interactionManager;
+    private bool performinAction = false;
 
-    public Transform target;
-
-    private void OnEnable()
-    {
-        StationEvents.OnResourceCreated += ResourceCreated;
-    }
-
-    private void OnDisable()
-    {
-        StationEvents.OnResourceCreated -= ResourceCreated;
-    }
+    public List<StationManagerBase> targetStations;
 
     private void Awake()
     {
@@ -32,8 +24,9 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
         creatureStateManager = GetComponent<CreatureStateManager>();
         animatorManager = GetComponent<CreatureAnimatorManager>();
         locomotionManager = GetComponent<CreatureLocomotionManager>();
+        interactionManager = GetComponent<CreatureInteractionManager>();
         creature = new ();
-        UnfullfiledNeedsTypes = new();
+        unfullfiledNeedsTypes = new();
     }
 
     private void Start()
@@ -43,6 +36,7 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
 
     private void Update()
     {
+        if (performinAction) return;
         MoveTowardsTarget();
     }
 
@@ -53,16 +47,18 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
 
     private void MoveTowardsTarget()
     {
-        if (target == null) return;
-
-        locomotionManager.MoveToDestination(target.position);
+        if (targetStations.Count < 1) return;
+        locomotionManager.MoveToDestination(targetStations[0].transform.position);
     }
 
-    private void ResourceCreated(NeedType needType, Transform target)
+    private void SetNeed(KeyValuePair<NeedType, float> need)
     {
-        if (creature.NeedFullfilled(needType)) return;
-        this.target = target;
-        creatureStateManager.OnStateChangeRequested(CreatureStateType.Walking);
+        creature.Needs.SetNeed(need.Key, need.Value);
+    }
+
+    public void SetTargetStations(StationManagerBase station)
+    {
+        targetStations.Add(station);
     }
 
     public void OnTicked()
@@ -78,19 +74,22 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
         {
             creature.Needs.SetNeed(need.Key, Mathf.Min(100, need.Value + 1));
 
-            bool isNeedInUnfulfilledNeeds = UnfullfiledNeedsTypes.Any(n => n == need.Key);
+            bool isNeedInUnfulfilledNeeds = unfullfiledNeedsTypes.Any(n => n == need.Key);
 
             if (need.Value > warningThreshold && !isNeedInUnfulfilledNeeds) { 
                 creatureUIManager.UpdateNeedPanel(need.Key);
-                UnfullfiledNeedsTypes.Add(need.Key);
+                unfullfiledNeedsTypes.Add(need.Key);
+
+                CreatureEvents.OnCreatureWithNeeds?.Invoke(this, need.Key, ActionType.Add);
+
             }
             if (need.Value < warningThreshold && isNeedInUnfulfilledNeeds) {
                 creatureUIManager.UpdateNeedPanel(need.Key);
-                UnfullfiledNeedsTypes.Remove(need.Key);
+                unfullfiledNeedsTypes.Remove(need.Key);
+
+                CreatureEvents.OnCreatureWithNeeds?.Invoke(this, need.Key, ActionType.Remove);
             }
         }
         UIEvens.OnUpdateStatusUI?.Invoke(_needs);
     }
-
-
 }

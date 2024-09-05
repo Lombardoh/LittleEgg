@@ -5,25 +5,26 @@ public class LocomotionManagerBase : MonoBehaviour
 {
     public NavMeshAgent agent;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
     }
 
     private void Update()
     {
-        if (!agent.hasPath || agent.remainingDistance > 5f) { return; }
+        if (agent.pathPending || agent.remainingDistance > agent.stoppingDistance || agent.hasPath) { return; }
 
-        DestionationReached();
+        DestinationReached();
     }
 
-    public void MoveToDestination(Vector3 destination)
+    public virtual void MoveToDestination(Vector3 destination)
     {
         agent.SetDestination(destination);
     }
 
-    private void DestionationReached()
+    protected virtual void DestinationReached()
     {
-        Debug.Log("asd");
+        agent.isStopped = true;
+        agent.ResetPath();
     }
 }
