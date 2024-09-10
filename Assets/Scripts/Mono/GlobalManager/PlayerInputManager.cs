@@ -5,7 +5,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 {
     public GameObject floor;
     PlayerControls playerControls;
-    public StationManagerBase CurrentStation {  get; private set; }
+    public StationManagerBase CurrentStation { get; private set; }
 
     private void OnEnable()
     {
@@ -17,7 +17,14 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
             {
                 if (!IsPointerOverUI())
                 {
-                    CreateStation();
+                    if (CurrentStation == null)
+                    {
+                        PerformRaycast();
+                    }
+                    else
+                    {
+                        CreateStation();
+                    }
                 }
             };
         }
@@ -44,11 +51,23 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
     private void Update()
     {
-        if(CurrentStation == null) { return ;}
+        if (CurrentStation == null) return;
 
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = Camera.main.WorldToScreenPoint(CurrentStation.transform.position).z;
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
         CurrentStation.transform.position = worldPosition;
+    }
+
+    private void PerformRaycast()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (!Physics.Raycast(ray, out hit)) return;
+
+        if (!hit.transform.TryGetComponent(out CreatureManagerBase creature)) return;
+
+        creature.TogglePanel();
     }
 }

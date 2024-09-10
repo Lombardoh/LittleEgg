@@ -6,18 +6,19 @@ public class CreatureUIManager : MonoBehaviour
 {
     public Transform needPanel;
     public Transform UrgentNeedPanel;
-    public bool IsActive {  get; private set; } = false;
     public List<NeedData> UnfullfiledNeeds;
     private int currentNeedPanelSpriteIndex = 0;
-    private bool isTicking = false;
     public Camera mainCamera;
     public SpriteValuePairManager spriteValuePrefab;
     public ImageManager imageManagerPrefab;
     private List<SpriteValuePairManager> needValueList;
 
+    public bool IsActive {  get; private set; } = false;
+
     private void Start()
     {
         needValueList = new();
+        if (!IsActive) return;
         InitNeedPanels();
     }
 
@@ -77,4 +78,13 @@ public class CreatureUIManager : MonoBehaviour
         }
     }
 
+    public void TogglePanel()
+    {
+        IsActive = !IsActive;
+        needPanel.gameObject.SetActive(IsActive);
+        UrgentNeedPanel.gameObject.SetActive(IsActive);
+
+        if (!IsActive) return;
+        InitNeedPanels();
+    }
 }

@@ -16,6 +16,7 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
     public CreatureLocomotionManager locomotionManager;
     public CreatureInteractionManager interactionManager;
     private bool performinAction = false;
+    private bool isPanelOn = false;
 
     public List<StationManagerBase> targetStations;
 
@@ -28,6 +29,7 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
         interactionManager = UnityUtils.GetOrAddComponent<CreatureInteractionManager>(gameObject);
         creature = new ();
         unfullfiledNeedsTypes = new();
+
     }
 
     private void Start()
@@ -82,8 +84,8 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
                 unfullfiledNeedsTypes.Add(need.Key);
 
                 CreatureEvents.OnCreatureWithNeeds?.Invoke(this, need.Key, ActionType.Add);
-
             }
+
             if (need.Value < warningThreshold && isNeedInUnfulfilledNeeds) {
                 creatureUIManager.UpdateUrgentNeedPanel(need.Key);
                 unfullfiledNeedsTypes.Remove(need.Key);
@@ -91,6 +93,14 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
                 CreatureEvents.OnCreatureWithNeeds?.Invoke(this, need.Key, ActionType.Remove);
             }
         }
+
+        if (!isPanelOn) return;
         creatureUIManager.UpdateNeedPanel(_needs);
+    }
+
+    public void TogglePanel()
+    {
+        isPanelOn = !isPanelOn;
+        creatureUIManager.TogglePanel();
     }
 }

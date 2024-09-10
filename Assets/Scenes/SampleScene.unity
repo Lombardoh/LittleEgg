@@ -278,19 +278,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1451315658753611114, guid: b2269037e30b67143b7984bc08680fc1, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1451315658753611114, guid: b2269037e30b67143b7984bc08680fc1, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1451315658753611114, guid: b2269037e30b67143b7984bc08680fc1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1451315658753611114, guid: b2269037e30b67143b7984bc08680fc1, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1451315658753611114, guid: b2269037e30b67143b7984bc08680fc1, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -336,6 +336,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CreatureUIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2783444425513418981, guid: b2269037e30b67143b7984bc08680fc1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3517006831190667999, guid: b2269037e30b67143b7984bc08680fc1, type: 3}
       propertyPath: mainCamera
       value: 
@@ -352,6 +356,10 @@ PrefabInstance:
       propertyPath: imageManagerPrefab
       value: 
       objectReference: {fileID: 1447056994391139483, guid: 984e551035c0fa44c990d9a94a95dfb4, type: 3}
+    - target: {fileID: 3809323955014692658, guid: b2269037e30b67143b7984bc08680fc1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5068289485779233059, guid: b2269037e30b67143b7984bc08680fc1, type: 3}
       propertyPath: m_DynamicPixelsPerUnit
       value: 1
@@ -426,7 +434,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6794706639917398748, guid: b2269037e30b67143b7984bc08680fc1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6794706639917398748, guid: b2269037e30b67143b7984bc08680fc1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -438,6 +446,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6794706639917398748, guid: b2269037e30b67143b7984bc08680fc1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8997814080645881230, guid: b2269037e30b67143b7984bc08680fc1, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
