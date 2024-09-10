@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using GameUtils;
 
 public class CreatureManagerBase : MonoBehaviour, ITickListener
 {
@@ -21,10 +22,10 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
     private void Awake()
     {
         creatureUIManager = GetComponentInChildren<CreatureUIManager>();
-        creatureStateManager = GetComponent<CreatureStateManager>();
-        animatorManager = GetComponent<CreatureAnimatorManager>();
-        locomotionManager = GetComponent<CreatureLocomotionManager>();
-        interactionManager = GetComponent<CreatureInteractionManager>();
+        creatureStateManager = UnityUtils.GetOrAddComponent<CreatureStateManager>(gameObject);
+        animatorManager = UnityUtils.GetOrAddComponent<CreatureAnimatorManager>(gameObject);
+        locomotionManager = UnityUtils.GetOrAddComponent<CreatureLocomotionManager>(gameObject);
+        interactionManager = UnityUtils.GetOrAddComponent<CreatureInteractionManager>(gameObject);
         creature = new ();
         unfullfiledNeedsTypes = new();
     }
@@ -77,19 +78,19 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
             bool isNeedInUnfulfilledNeeds = unfullfiledNeedsTypes.Any(n => n == need.Key);
 
             if (need.Value > warningThreshold && !isNeedInUnfulfilledNeeds) { 
-                creatureUIManager.UpdateNeedPanel(need.Key);
+                creatureUIManager.UpdateUrgentNeedPanel(need.Key);
                 unfullfiledNeedsTypes.Add(need.Key);
 
                 CreatureEvents.OnCreatureWithNeeds?.Invoke(this, need.Key, ActionType.Add);
 
             }
             if (need.Value < warningThreshold && isNeedInUnfulfilledNeeds) {
-                creatureUIManager.UpdateNeedPanel(need.Key);
+                creatureUIManager.UpdateUrgentNeedPanel(need.Key);
                 unfullfiledNeedsTypes.Remove(need.Key);
 
                 CreatureEvents.OnCreatureWithNeeds?.Invoke(this, need.Key, ActionType.Remove);
             }
         }
-        UIEvens.OnUpdateStatusUI?.Invoke(_needs);
+        creatureUIManager.UpdateNeedPanel(_needs);
     }
 }

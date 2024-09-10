@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NeedDatas
   m_EditorClassIdentifier: 
   needDatas:
-  - sprite: {fileID: 21300000, guid: 9f479b791ce5dd54ebe5209c81878fe5, type: 3}
+  - sprite: {fileID: 21300000, guid: 6ebc3038bdcd34a4ca5bfca713ee68ab, type: 3}
     needType: 0
   - sprite: {fileID: 21300000, guid: 064ad6015d05d3245948ab42df33852b, type: 3}
     needType: 1
