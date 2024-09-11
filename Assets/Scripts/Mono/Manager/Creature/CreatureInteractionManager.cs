@@ -16,8 +16,8 @@ public class CreatureInteractionManager : InteractionManagerBase
     {
         if (creature.targetStations.Count < 1) return;
 
+        creature.PerforminAction = true;
         NeedType stationType = creature.targetStations[0].GetNeedType();
-
 
         switch (stationType)
         {

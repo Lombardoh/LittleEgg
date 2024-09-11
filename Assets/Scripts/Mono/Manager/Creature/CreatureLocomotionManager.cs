@@ -10,9 +10,9 @@ public class CreatureLocomotionManager : LocomotionManagerBase
         creature = GetComponent<CreatureManagerBase>();
     }
 
-    public override void MoveToDestination(Vector3 destination)
+    public override void SetDestination(Vector3 destination)
     {
-        base.MoveToDestination(destination);
+        base.SetDestination(destination);
         creature.creatureStateManager.OnStateChangeRequested(CreatureStateType.Walking);
     }
 

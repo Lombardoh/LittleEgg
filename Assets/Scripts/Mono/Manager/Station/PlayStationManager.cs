@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class PlayStationManager : StationManagerBase
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Initialize(NeedType.Boredom, 100, 100, 1);
+        GetNeedType();
     }
 }

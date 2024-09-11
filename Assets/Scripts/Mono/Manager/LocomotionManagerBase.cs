@@ -10,14 +10,13 @@ public class LocomotionManagerBase : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        if (agent.pathPending || agent.remainingDistance > agent.stoppingDistance || agent.hasPath) { return; }
-
+        if (!agent.hasPath || agent.pathPending || agent.remainingDistance > agent.stoppingDistance) { return; }
         DestinationReached();
     }
 
-    public virtual void MoveToDestination(Vector3 destination)
+    public virtual void SetDestination(Vector3 destination)
     {
         agent.SetDestination(destination);
     }

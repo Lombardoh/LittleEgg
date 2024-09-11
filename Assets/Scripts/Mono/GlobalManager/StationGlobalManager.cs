@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class StationGlobalManager : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class StationGlobalManager : MonoBehaviour
     }
     private void Awake()
     {
-        stations = new List<StationManagerBase>();
+        //stations = new List<StationManagerBase>();
     }
 
     private void StationRequested(NeedType needType)
@@ -34,11 +35,9 @@ public class StationGlobalManager : MonoBehaviour
 
     private StationManagerBase GetNearestStation(Vector3 position, NeedType needType)
     {
-        var nearestStation = stations
+        return stations
             .Where(station => station.GetNeedType() == needType)
-            .OrderBy(station => Vector3.Distance(position, station.transform.position))
+            .OrderBy(station => Vector3.Distance(station.transform.position, position))
             .FirstOrDefault();
-
-        return nearestStation;
     }
 }

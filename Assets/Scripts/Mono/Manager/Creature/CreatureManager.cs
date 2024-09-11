@@ -15,7 +15,8 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
     public CreatureAnimatorManager animatorManager;
     public CreatureLocomotionManager locomotionManager;
     public CreatureInteractionManager interactionManager;
-    private bool performinAction = false;
+
+    public bool PerforminAction { get; set; } = false;
     private bool isPanelOn = false;
 
     public List<StationManagerBase> targetStations;
@@ -37,31 +38,21 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
         ((ITickListener)this).SubscribeToTicks(TickType.Large);
     }
 
-    private void Update()
-    {
-        if (performinAction) return;
-        MoveTowardsTarget();
-    }
-
     public List<KeyValuePair<NeedType, float>> GetAllNeeds()
     {
         return creature.GetNeeds().GetAllNeeds();
     }
 
-    private void MoveTowardsTarget()
+    public void SetNeed(NeedType needType, float amount)
     {
-        if (targetStations.Count < 1) return;
-        locomotionManager.MoveToDestination(targetStations[0].transform.position);
-    }
-
-    private void SetNeed(KeyValuePair<NeedType, float> need)
-    {
-        creature.Needs.SetNeed(need.Key, need.Value);
+        creature.Needs.SetNeed(needType, amount);
     }
 
     public void SetTargetStations(StationManagerBase station)
     {
         targetStations.Add(station);
+        if (targetStations.Count != 1) return;
+        locomotionManager.SetDestination(targetStations[0].transform.position);
     }
 
     public void OnTicked()
@@ -89,6 +80,12 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
             if (need.Value < warningThreshold && isNeedInUnfulfilledNeeds) {
                 creatureUIManager.UpdateUrgentNeedPanel(need.Key);
                 unfullfiledNeedsTypes.Remove(need.Key);
+                var stationToRemove = targetStations.FirstOrDefault(station => station.GetNeedType() == need.Key);
+
+                if (stationToRemove != null)
+                {
+                    targetStations.Remove(stationToRemove);
+                }
 
                 CreatureEvents.OnCreatureWithNeeds?.Invoke(this, need.Key, ActionType.Remove);
             }

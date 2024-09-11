@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class StationManagerBase : MonoBehaviour, IInteractable
 {
-    private Resource resource;
-    private float refillRate;
-
+    protected Resource resource;
+    protected float refillRate;
 
     public virtual void Initialize(NeedType needType, float maxAmount, float currentAmount, float refillRate)
     {
