@@ -5,7 +5,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 {
     public GameObject floor;
     PlayerControls playerControls;
-    public StationManagerBase CurrentStation { get; private set; }
+    public NeedStationManagerBase CurrentStation { get; private set; }
 
     private void OnEnable()
     {
@@ -44,7 +44,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         CurrentStation = null;
     }
 
-    public void SetCurrentStation(StationManagerBase currentStation)
+    public void SetCurrentStation(NeedStationManagerBase currentStation)
     {
         this.CurrentStation = currentStation;
     }

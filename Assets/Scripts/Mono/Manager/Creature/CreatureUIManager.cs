@@ -7,7 +7,6 @@ public class CreatureUIManager : MonoBehaviour
     public Transform needPanel;
     public Transform UrgentNeedPanel;
     public List<NeedData> UnfullfiledNeeds;
-    private int currentNeedPanelSpriteIndex = 0;
     public Camera mainCamera;
     public SpriteValuePairManager spriteValuePrefab;
     public ImageManager imageManagerPrefab;
@@ -43,7 +42,7 @@ public class CreatureUIManager : MonoBehaviour
 
     private void InitNeedPanels()
     {
-        NeedDatas datas = (NeedDatas)ScriptableManager.Instance.scriptableList[(int)ScriptableType.Need];
+        NeedDatas datas = (NeedDatas)ScriptableManager.Instance.scriptableList[(int)ScriptableType.Needs];
         int index = 0;
 
         foreach (NeedData needData in datas.needDatas)

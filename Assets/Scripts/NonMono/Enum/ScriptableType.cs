@@ -1,5 +1,7 @@
 public enum ScriptableType
 {
-    Need,
-    Station
+    Needs,
+    NeedStations,
+    TrainStations,
+    Creatures
 }

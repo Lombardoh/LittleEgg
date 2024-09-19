@@ -1,10 +1,10 @@
 using UnityEngine;
 
 [System.Serializable]
-public class StationData
+public class TrainStationData
 {
-    public NeedType needType;
-    public StationManagerBase stationPrefab;
+    public StatType statType;
+    public TrainStationManagerBase stationPrefab;
     public float maxAmount;
     public float currentAmount;
     public float refillRate;

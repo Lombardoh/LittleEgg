@@ -1,4 +1,4 @@
-public class FoodStationManager : StationManagerBase
+public class FoodStationManager : NeedStationManagerBase
 {
     private void Start()
     {

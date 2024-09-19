@@ -4,15 +4,13 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour
 {
     public Transform constructPanel;
-    private Dictionary<string, NeedRowManager> statusPanelText = new();
     public SlotPrefabManager slotPrefab;
     private NeedDatas needDatas;
-    private readonly float verticalSpacing = 60f;
     public NeedRowManager needRow;
 
     void Start()
     {
-        needDatas = (NeedDatas)ScriptableManager.Instance.RequestData(ScriptableType.Need);
+        needDatas = (NeedDatas)ScriptableManager.Instance.RequestData(ScriptableType.Needs);
         FillConstructPanel();
     }
 
@@ -31,16 +29,6 @@ public class MenuManager : MonoBehaviour
             newSlot.Initialize(needData);
             if (!newSlot.TryGetComponent<RectTransform>(out RectTransform slotRectTransform)) return;
             slotRectTransform.anchoredPosition = new Vector2(100, -150 * (needDatas.needDatas.IndexOf(needData) - 1) - 50);
-
-            //NeedRowManager newRow = Instantiate(needRow, statusPanel);
-            //if (newRow == null) return;
-
-            //newRow.SetText(needData.needType.ToString(), "0");
-            //statusPanelText.Add(needData.needType.ToString(), newRow);
-            //if (!newRow.TryGetComponent<RectTransform>(out var rowRectTransform)) return;
-
-            //rowRectTransform.anchoredPosition = new Vector2(0, yOffset);
-            //yOffset -= verticalSpacing;
         }
     }
 }

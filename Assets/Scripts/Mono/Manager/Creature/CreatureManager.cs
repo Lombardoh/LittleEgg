@@ -19,7 +19,7 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
     public bool PerforminAction { get; set; } = false;
     private bool isPanelOn = false;
 
-    public List<StationManagerBase> targetStations;
+    public List<NeedStationManagerBase> targetStations;
 
     private void Awake()
     {
@@ -48,7 +48,7 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
         creature.Needs.SetNeed(needType, amount);
     }
 
-    public void SetTargetStations(StationManagerBase station)
+    public void SetTargetStations(NeedStationManagerBase station)
     {
         targetStations.Add(station);
         if (targetStations.Count != 1) return;

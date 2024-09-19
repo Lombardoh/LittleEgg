@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4e69f2dbc514e94f8ce1c5da3c37e1f, type: 3}
-  m_Name: StationDatas
+  m_Script: {fileID: 11500000, guid: faeb3798860b3624fa3513499bbe225f, type: 3}
+  m_Name: NeedStationDatas
   m_EditorClassIdentifier: 
-  stationData:
+  needStationData:
   - needType: 0
     stationPrefab: {fileID: 0}
     maxAmount: 0
@@ -20,9 +20,9 @@ MonoBehaviour:
     refillRate: 0
   - needType: 1
     stationPrefab: {fileID: 7525541074254221192, guid: 688b41c129320c74abd99938495856c2, type: 3}
-    maxAmount: 100
-    currentAmount: 100
-    refillRate: 1
+    maxAmount: 0
+    currentAmount: 0
+    refillRate: 0
   - needType: 2
     stationPrefab: {fileID: 4787028365746890501, guid: 919014d45d3b3964dbb0745f03b5e127, type: 3}
     maxAmount: 0

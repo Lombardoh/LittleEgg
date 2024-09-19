@@ -25,7 +25,7 @@ public class CreatureGlobalManager : MonoBehaviour
 
     private void AssignNeedStation(CreatureManagerBase creature, NeedType needType)
     {
-        StationManagerBase newStationTarget = StationEvents.OnNearestStationRequested.Invoke(this.transform.position, needType);
+        NeedStationManagerBase newStationTarget = StationEvents.OnNearestStationRequested.Invoke(this.transform.position, needType);
         if (newStationTarget == null) return;
         creature.SetTargetStations(newStationTarget);
     }
