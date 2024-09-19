@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class SlotPrefabManager : MonoBehaviour
 {
     private Image image;
-    public NeedData needData;
+    public NeedSpriteData needData;
 
-    public void Initialize(NeedData needData)
+    public void Initialize(NeedSpriteData needData)
     {
         image = GetComponentInChildren<Image>(true);
 

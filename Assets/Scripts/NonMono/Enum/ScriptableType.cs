@@ -1,6 +1,7 @@
 public enum ScriptableType
 {
-    Needs,
+    NeedsSprites,
+    StatsSprites,
     NeedStations,
     TrainStations,
     Creatures

@@ -5,20 +5,23 @@ using UnityEngine;
 public class CreatureUIManager : MonoBehaviour
 {
     public Transform needPanel;
-    public Transform UrgentNeedPanel;
-    public List<NeedData> UnfullfiledNeeds;
+    public Transform statPanel;
+    public List<NeedSpriteData> UnfullfiledNeeds;
     public Camera mainCamera;
     public SpriteValuePairManager spriteValuePrefab;
     public ImageManager imageManagerPrefab;
-    private List<SpriteValuePairManager> needValueList;
+    private List<SpriteValuePairManager> needsValueList;
+    private List<SpriteValuePairManager> statsValueList;
 
     public bool IsActive {  get; private set; } = false;
 
     private void Start()
     {
-        needValueList = new();
+        statsValueList = new();
+        needsValueList = new();
         if (!IsActive) return;
-        InitNeedPanels();
+        InitNeedsPanel();
+        InitStatsPanel();
     }
 
     void Update()
@@ -29,23 +32,13 @@ public class CreatureUIManager : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(-directionToCamera);
     }
 
-    public void UpdateUrgentNeedPanel(NeedType needType)
+
+    private void InitNeedsPanel()
     {
-        bool exists = UnfullfiledNeeds.Any(needData => needData.needType == needType);
-
-        if (exists){ UnfullfiledNeeds.RemoveAll(needData => needData.needType == needType); return; }
-
-        Sprite sprite = ScriptableManager.Instance.GetNeedSprite(needType);
-        NeedData newUnfullfiledNeed = new(sprite, needType);
-        UnfullfiledNeeds.Add(newUnfullfiledNeed);
-    }
-
-    private void InitNeedPanels()
-    {
-        NeedDatas datas = (NeedDatas)ScriptableManager.Instance.scriptableList[(int)ScriptableType.Needs];
+        NeedSpriteDatas needSpriteDatas = (NeedSpriteDatas)ScriptableManager.Instance.scriptableList[(int)ScriptableType.NeedsSprites];
         int index = 0;
 
-        foreach (NeedData needData in datas.needDatas)
+        foreach (NeedSpriteData needData in needSpriteDatas.needSpriteDatas)
         {
             if (needData.needType == NeedType.None) continue;
 
@@ -56,14 +49,29 @@ public class CreatureUIManager : MonoBehaviour
             newSpriteValuePrefab.transform.localPosition = newPosition;
 
             newSpriteValuePrefab.Init("100", needData.sprite);
-            needValueList.Add(newSpriteValuePrefab);
+            needsValueList.Add(newSpriteValuePrefab);
 
+            index++;
+        }
+    }
 
-            ImageManager newImage = Instantiate(imageManagerPrefab, UrgentNeedPanel);
-            newImage.SetImage(needData.sprite);
-            Vector3 newImagePosition = newImage.transform.localPosition;
-            newImagePosition.x += index * 1.1f;
-            newImage.transform.localPosition = newImagePosition;
+    private void InitStatsPanel()
+    {
+        StatSpriteDatas statSpriteDatas = (StatSpriteDatas)ScriptableManager.Instance.scriptableList[(int)ScriptableType.StatsSprites];
+        int index = 0;
+
+        foreach (StatSpriteData statSpriteData in statSpriteDatas.statSpriteDatas)
+        {
+            if (statSpriteData.statType == StatType.None) continue;
+
+            SpriteValuePairManager newSpriteValuePrefab = Instantiate(spriteValuePrefab, statPanel);
+
+            Vector3 newPosition = newSpriteValuePrefab.transform.localPosition;
+            newPosition.x += index;
+            newSpriteValuePrefab.transform.localPosition = newPosition;
+
+            newSpriteValuePrefab.Init("10", statSpriteData.sprite);
+            statsValueList.Add(newSpriteValuePrefab);
 
             index++;
         }
@@ -71,9 +79,9 @@ public class CreatureUIManager : MonoBehaviour
 
     public void UpdateNeedPanel(List<KeyValuePair<NeedType, float>> needs)
     {
-        for (int i = 0; i < needValueList.Count(); i++)
+        for (int i = 0; i < needsValueList.Count(); i++)
         {
-            needValueList[i].SetText(needs[i].Value.ToString());
+            needsValueList[i].SetText(needs[i].Value.ToString());
         }
     }
 
@@ -81,9 +89,10 @@ public class CreatureUIManager : MonoBehaviour
     {
         IsActive = !IsActive;
         needPanel.gameObject.SetActive(IsActive);
-        UrgentNeedPanel.gameObject.SetActive(IsActive);
+        statPanel.gameObject.SetActive(IsActive);
 
         if (!IsActive) return;
-        InitNeedPanels();
+        InitNeedsPanel();
+        InitStatsPanel();
     }
 }

@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class NeedsBase
+public class Needs
 {
-    public Dictionary<NeedType, float> Needs { get; set; }
+    public Dictionary<NeedType, float> needs { get; set; }
 
-    public NeedsBase(float hunger, float thirst, float sleep, float boredom)
+    public Needs(float hunger, float thirst, float sleep, float boredom)
     {
-        Needs = new Dictionary<NeedType, float>
+        needs = new Dictionary<NeedType, float>
         {
             { NeedType.Hunger, hunger },
             { NeedType.Thirst, thirst },
@@ -20,18 +20,18 @@ public class NeedsBase
     public float GetNeed(NeedType needType)
     {
         if(needType == NeedType.None) { return 0; }
-        return Needs[needType];
+        return needs[needType];
     }
 
     public void SetNeed(NeedType needType, float value)
     {
         float clampedValue = Mathf.Clamp(value, 0, 100);
-        Needs[needType] = clampedValue;
+        needs[needType] = clampedValue;
     }
 
 
     public List<KeyValuePair<NeedType, float>> GetAllNeeds()
     {
-        return Needs.Where(need => need.Key != NeedType.None).ToList();
+        return needs.Where(need => need.Key != NeedType.None).ToList();
     }
 }

@@ -1,12 +1,12 @@
 using UnityEngine;
 
 [System.Serializable]
-public class NeedData
+public class NeedSpriteData
 {
     public Sprite sprite;
     public NeedType needType;
 
-    public NeedData(Sprite sprite, NeedType needType)
+    public NeedSpriteData(Sprite sprite, NeedType needType)
     {
         this.sprite = sprite;
         this.needType = needType;

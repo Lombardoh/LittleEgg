@@ -14,7 +14,7 @@ public class ScriptableManager : Singleton<ScriptableManager>
 
     public Sprite GetNeedSprite(NeedType needType) 
     {
-        NeedDatas needDatas = (NeedDatas)scriptableList[0];
-        return needDatas.needDatas[(int)needType].sprite ?? notFoundSprite;
+        NeedSpriteDatas needSpriteDatas = (NeedSpriteDatas)scriptableList[0];
+        return needSpriteDatas.needSpriteDatas[(int)needType].sprite ?? notFoundSprite;
     }
 }

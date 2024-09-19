@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NeedStationManagerBase : MonoBehaviour, IInteractable
+public class NeedStationManagerBase : MonoBehaviour, IInteractable<NeedType>
 {
     protected Resource resource;
     protected float refillRate;

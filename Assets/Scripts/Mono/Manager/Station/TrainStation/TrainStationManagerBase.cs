@@ -1,41 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrainStationManagerBase : StationManagerBase, IInteractable
+public class TrainStationManagerBase : StationManagerBase, IInteractable<StatType>
 {
-    protected Resource resource;
-    protected float refillRate;
+    protected StatType statType;
+    protected float trainRate;
 
-    public virtual void Initialize(NeedType needType, float maxAmount, float currentAmount, float refillRate)
+    public virtual void Initialize(StatType statType, float trainRate)
     {
-        resource = new(needType, maxAmount, currentAmount);
-        this.refillRate = refillRate;
+        this.statType = statType;
+        this.trainRate = trainRate;
     }
 
-    public virtual NeedType GetNeedType()
+    public virtual StatType GetStatType()
     {
-        return resource.GetNeedType();
+        return statType;
     }
 
-    //private (float resourceAmount, NeedType needType) ResourceConsumed(float consumedAmount)
-    //{
-    //    if (resource == null) return (0f, NeedType.None);
-
-    //    float newValue = Mathf.Max(0, resource.GetResouceValue() - consumedAmount);
-
-    //    resource.SetResouceValue(newValue);
-
-    //    float resourceLeft = Mathf.Max(resource.GetResouceValue(), consumedAmount);
-    //    NeedType needType = resource.GetNeedType();
-    //    if(resourceLeft < 1) { Destroy(resource.gameObject); }
-        
-    //    return (resourceLeft, needType);
-    //}
-
-    public KeyValuePair<NeedType, float> Interact()
+    public KeyValuePair<StatType, float> Interact()
     {
-        NeedType needType = resource.GetNeedType();
-        float resourceValue = resource.GetResouceValue();
-        return new KeyValuePair<NeedType, float>(needType, resourceValue);
+        return new KeyValuePair<StatType, float>(statType, trainRate);
     }
 }

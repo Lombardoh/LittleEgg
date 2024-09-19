@@ -71,14 +71,12 @@ public class CreatureManagerBase : MonoBehaviour, ITickListener
             bool isNeedInUnfulfilledNeeds = unfullfiledNeedsTypes.Any(n => n == need.Key);
 
             if (need.Value > warningThreshold && !isNeedInUnfulfilledNeeds) { 
-                creatureUIManager.UpdateUrgentNeedPanel(need.Key);
                 unfullfiledNeedsTypes.Add(need.Key);
 
                 CreatureEvents.OnCreatureWithNeeds?.Invoke(this, need.Key, ActionType.Add);
             }
 
             if (need.Value < warningThreshold && isNeedInUnfulfilledNeeds) {
-                creatureUIManager.UpdateUrgentNeedPanel(need.Key);
                 unfullfiledNeedsTypes.Remove(need.Key);
                 var stationToRemove = targetStations.FirstOrDefault(station => station.GetNeedType() == need.Key);
 

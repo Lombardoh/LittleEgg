@@ -5,20 +5,20 @@ public class MenuManager : MonoBehaviour
 {
     public Transform constructPanel;
     public SlotPrefabManager slotPrefab;
-    private NeedDatas needDatas;
+    private NeedSpriteDatas needSpriteDatas;
     public NeedRowManager needRow;
 
     void Start()
     {
-        needDatas = (NeedDatas)ScriptableManager.Instance.RequestData(ScriptableType.Needs);
+        needSpriteDatas = (NeedSpriteDatas)ScriptableManager.Instance.RequestData(ScriptableType.NeedsSprites);
         FillConstructPanel();
     }
 
     private void FillConstructPanel()
     {
-        foreach (NeedData needData in needDatas.needDatas)
+        foreach (NeedSpriteData needSpriteData in needSpriteDatas.needSpriteDatas)
         {
-            if (needData.needType == NeedType.None) continue;
+            if (needSpriteData.needType == NeedType.None) continue;
             SlotPrefabManager newSlot = Instantiate(slotPrefab, constructPanel);
             if (newSlot == null)
             {
@@ -26,9 +26,9 @@ public class MenuManager : MonoBehaviour
                 continue;
             }
 
-            newSlot.Initialize(needData);
+            newSlot.Initialize(needSpriteData);
             if (!newSlot.TryGetComponent<RectTransform>(out RectTransform slotRectTransform)) return;
-            slotRectTransform.anchoredPosition = new Vector2(100, -150 * (needDatas.needDatas.IndexOf(needData) - 1) - 50);
+            slotRectTransform.anchoredPosition = new Vector2(100, -150 * (needSpriteDatas.needSpriteDatas.IndexOf(needSpriteData) - 1) - 50);
         }
     }
 }
