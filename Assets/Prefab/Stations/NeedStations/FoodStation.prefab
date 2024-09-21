@@ -146,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1098914322591843706}
   - component: {fileID: 905873494690337076}
-  - component: {fileID: 7525541074254221192}
+  - component: {fileID: 9200213921134484028}
   m_Layer: 3
   m_Name: FoodStation
   m_TagString: Untagged
@@ -164,7 +164,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3465612288043918476}
@@ -187,7 +187,7 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!114 &7525541074254221192
+--- !u!114 &9200213921134484028
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -196,8 +196,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7557166313984633169}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 365be450254bc6d4b89437f9b9296805, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ade86145e2799c40995fdf3a8711545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceSpawn: {fileID: 0}
-  resourcePrefab: {fileID: 0}

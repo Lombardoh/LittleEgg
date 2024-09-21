@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class CreatureLocomotionManager : LocomotionManagerBase
 {
-    public CreatureManagerBase creature;
+    public CreatureRanchManager creature;
 
     protected override void Awake()
     {
         base.Awake();
-        creature = GetComponent<CreatureManagerBase>();
+        creature = GetComponent<CreatureRanchManager>();
     }
 
     public override void SetDestination(Vector3 destination)

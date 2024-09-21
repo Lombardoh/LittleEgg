@@ -3,11 +3,11 @@ using UnityEngine;
 public class CreatureStateManager : MonoBehaviour
 {
     public CreatureBaseState currentState;
-    private CreatureManagerBase creature;
+    private CreatureRanchManager creature;
 
     private void Start()
     {
-        creature = GetComponent<CreatureManagerBase>();
+        creature = GetComponent<CreatureRanchManager>();
     }
 
     private void Update()

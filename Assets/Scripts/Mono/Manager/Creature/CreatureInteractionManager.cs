@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CreatureInteractionManager : InteractionManagerBase
 {
-    CreatureManagerBase creature;
+    CreatureRanchManager creature;
 
     protected override void Awake()
     {
         base.Awake();
-        creature = GetComponent<CreatureManagerBase>();
+        creature = GetComponent<CreatureRanchManager>();
     }
 
     public void InteractWithStation()

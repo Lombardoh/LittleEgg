@@ -1,16 +1,16 @@
 public class CreatureWalkState : CreatureBaseState
 {
-    public override void OnEnter(CreatureManagerBase creature)
+    public override void OnEnter(CreatureRanchManager creature)
     {
         creature.animatorManager.UpdateAnimatorValues("IsWalking", true);
     }
 
-    public override void OnExit(CreatureManagerBase creature)
+    public override void OnExit(CreatureRanchManager creature)
     {
         creature.animatorManager.UpdateAnimatorValues("IsWalking", false);
     }
 
-    public override void Update(CreatureManagerBase creature)
+    public override void Update(CreatureRanchManager creature)
     {
     }
 }

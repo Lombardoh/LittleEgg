@@ -62,11 +62,10 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     private void PerformRaycast()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
 
-        if (!Physics.Raycast(ray, out hit)) return;
+        if (!Physics.Raycast(ray, out RaycastHit hit)) return;
 
-        if (!hit.transform.TryGetComponent(out CreatureManagerBase creature)) return;
+        if (!hit.transform.TryGetComponent(out CreatureRanchManager creature)) return;
 
         creature.TogglePanel();
     }

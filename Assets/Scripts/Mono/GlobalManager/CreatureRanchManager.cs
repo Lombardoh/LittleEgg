@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreatureGlobalManager : MonoBehaviour
+public class CreatureRanchGlobaloManager : MonoBehaviour
 {
     public List<CreatureManagerBase> creatures;
-    public Dictionary<CreatureManagerBase, HashSet<NeedType>> creaturesWithNeeds;
+    public Dictionary<CreatureRanchManager, HashSet<NeedType>> creaturesWithNeeds;
 
     private void OnEnable()
     {
@@ -20,17 +20,17 @@ public class CreatureGlobalManager : MonoBehaviour
 
     private void Awake()
     {
-        creaturesWithNeeds = new Dictionary<CreatureManagerBase, HashSet<NeedType>>();
+        creaturesWithNeeds = new Dictionary<CreatureRanchManager, HashSet<NeedType>>();
     }
 
-    private void AssignNeedStation(CreatureManagerBase creature, NeedType needType)
+    private void AssignNeedStation(CreatureRanchManager creature, NeedType needType)
     {
         NeedStationManagerBase newStationTarget = StationEvents.OnNearestStationRequested.Invoke(this.transform.position, needType);
         if (newStationTarget == null) return;
         creature.SetTargetStations(newStationTarget);
     }
 
-    private void UpdateCreatureWithNeeds(CreatureManagerBase creature, NeedType needType, ActionType action)
+    private void UpdateCreatureWithNeeds(CreatureRanchManager creature, NeedType needType, ActionType action)
     {
         if (!creaturesWithNeeds.ContainsKey(creature))
         {

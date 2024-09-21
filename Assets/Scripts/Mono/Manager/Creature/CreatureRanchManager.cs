@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Linq;
 using GameUtils;
 
-public class CreatureManagerBase : MonoBehaviour, ITickListener
+public class CreatureRanchManager : CreatureManagerBase, ITickListener
 {
     private readonly float warningThreshold = 70;
     public float interactDistance = 3;
