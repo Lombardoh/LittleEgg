@@ -44,7 +44,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""id"": ""53cf6543-dcd6-445a-abea-f3d1c8adabd7"",
             ""actions"": [
                 {
-                    ""name"": ""Basic Action"",
+                    ""name"": ""Left Click"",
                     ""type"": ""Button"",
                     ""id"": ""a8099413-630e-4b31-94f0-5fb5666cbbf9"",
                     ""expectedControlType"": ""Button"",
@@ -53,7 +53,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SecondaryAction"",
+                    ""name"": ""Right Click"",
                     ""type"": ""Button"",
                     ""id"": ""b36cbc60-50df-41c1-9fe9-35923c69dfd0"",
                     ""expectedControlType"": ""Button"",
@@ -88,7 +88,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Basic Action"",
+                    ""action"": ""Left Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -209,7 +209,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SecondaryAction"",
+                    ""action"": ""Right Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -223,8 +223,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerCamera_Movement = m_PlayerCamera.FindAction("Movement", throwIfNotFound: true);
         // Player Actions
         m_PlayerActions = asset.FindActionMap("Player Actions", throwIfNotFound: true);
-        m_PlayerActions_BasicAction = m_PlayerActions.FindAction("Basic Action", throwIfNotFound: true);
-        m_PlayerActions_SecondaryAction = m_PlayerActions.FindAction("SecondaryAction", throwIfNotFound: true);
+        m_PlayerActions_LeftClick = m_PlayerActions.FindAction("Left Click", throwIfNotFound: true);
+        m_PlayerActions_RightClick = m_PlayerActions.FindAction("Right Click", throwIfNotFound: true);
         m_PlayerActions_SwapTool = m_PlayerActions.FindAction("Swap Tool", throwIfNotFound: true);
         m_PlayerActions_RotatePart = m_PlayerActions.FindAction("RotatePart", throwIfNotFound: true);
     }
@@ -334,16 +334,16 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     // Player Actions
     private readonly InputActionMap m_PlayerActions;
     private List<IPlayerActionsActions> m_PlayerActionsActionsCallbackInterfaces = new List<IPlayerActionsActions>();
-    private readonly InputAction m_PlayerActions_BasicAction;
-    private readonly InputAction m_PlayerActions_SecondaryAction;
+    private readonly InputAction m_PlayerActions_LeftClick;
+    private readonly InputAction m_PlayerActions_RightClick;
     private readonly InputAction m_PlayerActions_SwapTool;
     private readonly InputAction m_PlayerActions_RotatePart;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerActionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @BasicAction => m_Wrapper.m_PlayerActions_BasicAction;
-        public InputAction @SecondaryAction => m_Wrapper.m_PlayerActions_SecondaryAction;
+        public InputAction @LeftClick => m_Wrapper.m_PlayerActions_LeftClick;
+        public InputAction @RightClick => m_Wrapper.m_PlayerActions_RightClick;
         public InputAction @SwapTool => m_Wrapper.m_PlayerActions_SwapTool;
         public InputAction @RotatePart => m_Wrapper.m_PlayerActions_RotatePart;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
@@ -355,12 +355,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionsActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsActionsCallbackInterfaces.Add(instance);
-            @BasicAction.started += instance.OnBasicAction;
-            @BasicAction.performed += instance.OnBasicAction;
-            @BasicAction.canceled += instance.OnBasicAction;
-            @SecondaryAction.started += instance.OnSecondaryAction;
-            @SecondaryAction.performed += instance.OnSecondaryAction;
-            @SecondaryAction.canceled += instance.OnSecondaryAction;
+            @LeftClick.started += instance.OnLeftClick;
+            @LeftClick.performed += instance.OnLeftClick;
+            @LeftClick.canceled += instance.OnLeftClick;
+            @RightClick.started += instance.OnRightClick;
+            @RightClick.performed += instance.OnRightClick;
+            @RightClick.canceled += instance.OnRightClick;
             @SwapTool.started += instance.OnSwapTool;
             @SwapTool.performed += instance.OnSwapTool;
             @SwapTool.canceled += instance.OnSwapTool;
@@ -371,12 +371,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
         {
-            @BasicAction.started -= instance.OnBasicAction;
-            @BasicAction.performed -= instance.OnBasicAction;
-            @BasicAction.canceled -= instance.OnBasicAction;
-            @SecondaryAction.started -= instance.OnSecondaryAction;
-            @SecondaryAction.performed -= instance.OnSecondaryAction;
-            @SecondaryAction.canceled -= instance.OnSecondaryAction;
+            @LeftClick.started -= instance.OnLeftClick;
+            @LeftClick.performed -= instance.OnLeftClick;
+            @LeftClick.canceled -= instance.OnLeftClick;
+            @RightClick.started -= instance.OnRightClick;
+            @RightClick.performed -= instance.OnRightClick;
+            @RightClick.canceled -= instance.OnRightClick;
             @SwapTool.started -= instance.OnSwapTool;
             @SwapTool.performed -= instance.OnSwapTool;
             @SwapTool.canceled -= instance.OnSwapTool;
@@ -406,8 +406,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     }
     public interface IPlayerActionsActions
     {
-        void OnBasicAction(InputAction.CallbackContext context);
-        void OnSecondaryAction(InputAction.CallbackContext context);
+        void OnLeftClick(InputAction.CallbackContext context);
+        void OnRightClick(InputAction.CallbackContext context);
         void OnSwapTool(InputAction.CallbackContext context);
         void OnRotatePart(InputAction.CallbackContext context);
     }

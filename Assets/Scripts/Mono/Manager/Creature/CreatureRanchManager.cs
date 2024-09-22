@@ -8,7 +8,6 @@ public class CreatureRanchManager : CreatureManagerBase, ITickListener
     private readonly float warningThreshold = 70;
     public float interactDistance = 3;
 
-    private Creature creature;
     private CreatureUIManager creatureUIManager;
     public CreatureStateManager creatureStateManager;
     public List<NeedType> unfullfiledNeedsTypes;
@@ -21,16 +20,17 @@ public class CreatureRanchManager : CreatureManagerBase, ITickListener
 
     public List<NeedStationManagerBase> targetStations;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        if(!enabled ) return;
+
         creatureUIManager = GetComponentInChildren<CreatureUIManager>();
         creatureStateManager = UnityUtils.GetOrAddComponent<CreatureStateManager>(gameObject);
         animatorManager = UnityUtils.GetOrAddComponent<CreatureAnimatorManager>(gameObject);
         locomotionManager = UnityUtils.GetOrAddComponent<CreatureLocomotionManager>(gameObject);
         interactionManager = UnityUtils.GetOrAddComponent<CreatureInteractionManager>(gameObject);
-        creature = new ();
         unfullfiledNeedsTypes = new();
-
     }
 
     private void Start()

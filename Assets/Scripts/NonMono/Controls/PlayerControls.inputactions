@@ -22,7 +22,7 @@
             "id": "53cf6543-dcd6-445a-abea-f3d1c8adabd7",
             "actions": [
                 {
-                    "name": "Basic Action",
+                    "name": "Left Click",
                     "type": "Button",
                     "id": "a8099413-630e-4b31-94f0-5fb5666cbbf9",
                     "expectedControlType": "Button",
@@ -31,7 +31,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SecondaryAction",
+                    "name": "Right Click",
                     "type": "Button",
                     "id": "b36cbc60-50df-41c1-9fe9-35923c69dfd0",
                     "expectedControlType": "Button",
@@ -66,7 +66,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Basic Action",
+                    "action": "Left Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -187,7 +187,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SecondaryAction",
+                    "action": "Right Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

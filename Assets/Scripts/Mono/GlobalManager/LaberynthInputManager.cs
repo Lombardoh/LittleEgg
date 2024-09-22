@@ -1,9 +1,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerInputManager : Singleton<PlayerInputManager>
+public class LaberynthInputManager : Singleton<LaberynthInputManager>
 {
-    public GameObject floor;
     PlayerControls playerControls;
     public NeedStationManagerBase CurrentStation { get; private set; }
 
@@ -23,7 +22,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
                     }
                     else
                     {
-                        CreateStation();
+                        MoveCreatureToTile();
                     }
                 }
             };
@@ -36,27 +35,9 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         return EventSystem.current.IsPointerOverGameObject();
     }
 
-    void CreateStation()
+    private void MoveCreatureToTile()
     {
-        if (CurrentStation == null) return;
-        CurrentStation.transform.SetParent(floor.transform);
-        CreatureEvents.OnNewStationCreated?.Invoke(CurrentStation.GetNeedType());
-        CurrentStation = null;
-    }
 
-    public void SetCurrentStation(NeedStationManagerBase currentStation)
-    {
-        this.CurrentStation = currentStation;
-    }
-
-    private void Update()
-    {
-        if (CurrentStation == null) return;
-
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = Camera.main.WorldToScreenPoint(CurrentStation.transform.position).z;
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        CurrentStation.transform.position = worldPosition;
     }
 
     private void PerformRaycast()
@@ -64,9 +45,8 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (!Physics.Raycast(ray, out RaycastHit hit)) return;
+        if (!hit.transform.TryGetComponent(out IClickable Clickabe)) return;
 
-        if (!hit.transform.TryGetComponent(out CreatureRanchManager creature)) return;
-
-        creature.TogglePanel();
+        Clickabe.OnClicked();
     }
 }
